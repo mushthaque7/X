@@ -60,8 +60,10 @@ import {v2 as cloudinary} from "cloudinary"
 
  export const getSuggestedUsers = async (req,res)=>{
     try{
+
         const userId =  req.user._id
         const usersFollowedByMe = await User.findById(userId).select("following")
+        
         const users  =await User.aggregate([
             {
                 $match:{
