@@ -6,20 +6,20 @@ export const signup = async (req,res)=>{
         const{fullName,username,email,password} = req.body;
         const emailRegex= /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         if(!emailRegex.test(email)){
-            return res.statue(400).json({error:"Invalid email format"})
+            return res.status(400).json({error:"Invalid email format"})
         }
         const existingUser= await User.findOne({username})
         if (existingUser){
-            return res.statue(400).json({error:"User is already taken"})
+            return res.status(400).json({error:"User is already taken"})
 
         }
         const existingEmail= await User.findOne({email})
         if (existingEmail){
-            return res.statue(400).json({error:"Email is already taken"})
+            return res.status(400).json({error:"Email is already taken"})
 
         }
         if (password.length <6){
-            return res.statue(400).json({error:"Password should contain atleast 6 digits"})
+            return res.status(400).json({error:"Password should contain atleast 6 digits"})
         }
 
         const salt=await bcrypt.genSalt(10)
@@ -55,9 +55,9 @@ export const signup = async (req,res)=>{
 
 export const login = async (req,res)=>{
     try{
-        const {userName,password} = req.body;
-        console.log(userName,password)
-        const user = await User.findOne({username:userName})
+        const {username,password} = req.body;
+        console.log(username,password)
+        const user = await User.findOne({username:username})
         console.log(user)
         const isPasswordCorrect = await bcrypt.compare(password,user?.password || "")
 
