@@ -8,7 +8,7 @@ export const createPost = async (req,res) =>{
         const {text} = req.body
         let {img} = req.body
         const userId = req.user._id.toString()
-
+        console.log("in create")
         const user = await User.findById(userId)
         if (!user) return res.status(404).json({message:"User not found"})
 
@@ -17,8 +17,10 @@ export const createPost = async (req,res) =>{
         }
 
         if(img){
+            console.log("in img")
             const uploadedResponse = await cloudinary.uploader.upload(img)
             img = uploadedResponse.secure_url
+            
         }
 
         const newPost = new Post ({
