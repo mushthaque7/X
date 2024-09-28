@@ -34,7 +34,6 @@ import {v2 as cloudinary} from "cloudinary"
             //unfollow the user
             await User.findByIdAndUpdate(id,{$pull:{followers: req.user._id}})
             await User.findByIdAndUpdate(req.user._id,{$pull:{following: id}})
-            // return the id of the user as response
 
             res.status(200).json({message:"User unfollowed successfully"})
         }
@@ -49,7 +48,6 @@ import {v2 as cloudinary} from "cloudinary"
                 to:userToModify._id
             })
             await newNotification.save()
-            // return the id of the user as response
             res.status(200).json({message:"User followed successfully"})
         }
     }catch(error){
